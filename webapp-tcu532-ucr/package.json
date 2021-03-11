@@ -1,0 +1,36 @@
+{
+  "name": "webapp-tcu532-ucr",
+  "version": "0.0.1",
+  "description": "Web App for TCU-532 \"Economia Solidaria\" Universidad de Costa Rica",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "webpack": "webpack --mode development --watch"
+  },
+  "keywords": [
+    "MERN",
+    "Stack",
+    "UCR",
+    "TCU"
+  ],
+  "author": "Ricardo Rojas Montero & Edgar Rojas Méndez",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.19",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "nodemon": "^2.0.7",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
+  }
+}
