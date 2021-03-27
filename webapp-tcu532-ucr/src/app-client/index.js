@@ -10,5 +10,3 @@ class App extends Component {
 }
 
 render(<App/>, document.getElementById('app'));
-
-//https://youtu.be/204v5QXHlmc?t=1232

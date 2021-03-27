@@ -136,4 +136,8 @@ sketch
 !.vscode/extensions.json
 *.code-workspace
 
+### Secrets ###
+Accounts.txt
+**/config/default.json
+
 # End of https://www.toptal.com/developers/gitignore/api/react,node,vscode

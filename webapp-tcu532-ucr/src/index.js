@@ -1,11 +1,18 @@
 const express = require('express');
+//const connectDB = require('../config/db'); no borrar
 const morgan = require('morgan');
 const path = require('path');
 
-const { mongo } = require('./db');
-
 const app = express();
 
+//Codigo temporal, no borrar el codigo comentado
+const { mongooose } = require('./database');
+//Fin codigo temporal
+
+/* Codigo oficial
+// Connect Database
+connectDB();
+*/ //Fin codigo oficial
 //Settings
 app.set('port', process.env.PORT || 3000);
 
@@ -21,5 +28,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Server
 app.listen(app.get('port'), () => {
-    console.log(`Servidor en el puerto ${app.get('port')}`)
+    console.log(`Server on port ${app.get('port')}`)
 });

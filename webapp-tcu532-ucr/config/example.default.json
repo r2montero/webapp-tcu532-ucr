@@ -1,0 +1,7 @@
+//default.json
+
+{
+    "mongoURI":
+      "mongodb+srv://tcu532dbdev:<password>@webapptcucluster0.bb6fv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  }
+   /* Replace <password> with your database password */
