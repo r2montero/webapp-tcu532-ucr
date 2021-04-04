@@ -1,18 +1,17 @@
 const express = require('express');
-//const connectDB = require('../config/db'); no borrar
+const connectDB = require('../config/db');
 const morgan = require('morgan');
 const path = require('path');
 
 const app = express();
 
 //Codigo temporal, no borrar el codigo comentado
-const { mongooose } = require('./database');
+//const { mongooose } = require('./database');
 //Fin codigo temporal
 
-/* Codigo oficial
 // Connect Database
 connectDB();
-*/ //Fin codigo oficial
+
 //Settings
 app.set('port', process.env.PORT || 3000);
 
