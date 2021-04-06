@@ -20,7 +20,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 //Routes
-app.use('/api/categories', require('./routes/api/categories'));
+app.use('/api/categories', require('./api/categories'));
+app.use('/api/users', require('./routes/user_routes'));
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));

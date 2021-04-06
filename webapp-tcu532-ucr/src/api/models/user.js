@@ -1,19 +1,25 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-// When the database design was complete:
-//https://youtu.be/DqpL5UtJHus?t=2765
+
 
 const UserSchema = new Schema({
     name: {
-        type: String, 
+        type: String,
+        trim: true,
         required: true
     },
-    type: {
-        type: String, 
+    role: {
+        type: String,
+        enum: ["Admin", "User"],
+        default: "User",
+        trim: true,
         required: true
     },
     email: {
-        type: String, 
+        type: String,
+        trim: true,
+        index: true,
+        unique: true,
         required: true
     },
     phone: {
@@ -22,6 +28,11 @@ const UserSchema = new Schema({
     password: {
         type: String, 
         required: true
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+      required: true,
     }
 }, {
     timestamps: true

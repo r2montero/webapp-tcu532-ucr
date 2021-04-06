@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 //Load Category model
-const Category = require('../../models/category');
+const Category = require('./models/category');
 
 //@route GET /api/categories
 // @description Get all categories
@@ -75,7 +75,7 @@ router.post('/', async (req, res) => {
     });
 })
 
-// @route GET api/categories/:id
+// @route PUT api/categories/:id
 // @description Update a category
 // @access Restricted
 router.put('/:id', async (req, res) => {
@@ -112,6 +112,9 @@ router.put('/:id', async (req, res) => {
     };
 })
 
+// @route DELETE api/categories/:id
+// @description Update a category
+// @access Restricted
 router.delete('/:id', async (req, res) => {
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
         Category.findByIdAndRemove(req.params.id, (err, category) => {
