@@ -23,6 +23,7 @@ exports.create = async (req, res) => {
       msg: 'Uno de los campos obligatorios esta vacio'
     });
   };
+
   /**
    * Create a user
    */
@@ -34,18 +35,19 @@ exports.create = async (req, res) => {
     password: bcrypt.hashSync(password, 10),
     isActive,
   });
+
   /**
    * Save user to database
    */
   user.save((err, user) => {
     if (err) {
       console.log(err);
-      res.status(500).json({
+      return res.status(500).json({
         msg: 'No fue posible agregar el usuario'
       });
     };
     if (user) {
-      res.status(201).json(user);
+      return res.status(201).json(user);
     };
   });
 }
@@ -130,7 +132,7 @@ exports.delete = async (req, res) => {
       if (err) {
         console.log(err);
         return res.status(500).json({
-          msg: 'No fue posible actualizar el usuario'
+          msg: 'No fue posible eliminar el usuario'
         });
       };
       res.status(200).send(user);

@@ -7,7 +7,8 @@ const MultimediaSchema = new Schema({
         required: true
     },
     type: {
-        type: String, 
+        type: String,
+        enum: ["Audio", "Documento", "Imagen", "Infografía", "Vídeo", "Otro"],
         required: true
     },
     storage_link: {
