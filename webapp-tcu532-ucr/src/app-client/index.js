@@ -4,7 +4,7 @@ import ReactDOM, { render } from 'react-dom';
 class App extends Component {
     render() {
         return (
-            <h1>React breteando OK!</h1>
+            <h1>OK!</h1>
         )
     }
 }

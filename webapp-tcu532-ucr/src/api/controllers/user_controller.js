@@ -2,7 +2,7 @@
  * User controller : All business logic goes here
  */
 const User = require('../models/user');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 //Create new User
 exports.create = async (req, res) => {
