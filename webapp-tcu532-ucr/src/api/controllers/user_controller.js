@@ -2,13 +2,13 @@
  * User controller : All business logic goes here
  */
 const User = require('../models/user');
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 //Create new User
 exports.create = async (req, res) => {
   const {
     name,
-    role,
     email,
     phone,
     password,
@@ -29,7 +29,6 @@ exports.create = async (req, res) => {
    */
   const user = new User({
     name,
-    role,
     email,
     phone,
     password: bcrypt.hashSync(password, 10),
@@ -97,9 +96,7 @@ exports.update = async (req, res) => {
     /**
      * Updating user
      */
-    await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
-    }, (err, user) => {
+    await User.findByIdAndUpdate(req.params.id, req.body, { new:true }, (err, user) => {
       if (!user) {
         return res.status(404).json({
           msg: "Usuario no encontrado"

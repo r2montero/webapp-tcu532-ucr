@@ -21,8 +21,9 @@ app.use(express.json());
 
 //Routes
 app.use('/api/categories', require('./api/categories'));
-app.use('/api/users', require('./routes/user_routes'));
-app.use('/api/multimedia', require('./routes/multimedia_routes'))
+app.use('/api/usuarios', require('./routes/user_routes'));
+app.use('/api/multimedia', require('./routes/multimedia_routes'));
+app.use('/api/secciones', require('./routes/section_routes'));
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));

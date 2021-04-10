@@ -2,6 +2,7 @@
  * Multimedia controller : All business logic goes here
  */
 const Multimedia = require('../models/multimedia');
+const mongoose = require('mongoose');
 
 //Create new Multimedia
 exports.create = async (req, res) => {

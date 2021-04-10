@@ -3,7 +3,10 @@ const { Schema } = mongoose;
 
 const SectionSchema = new Schema({
     name: {
-        type: String, 
+        type: String,
+        trim: true,
+        index: true,
+        unique: true,
         required: true
     },
     description: {
