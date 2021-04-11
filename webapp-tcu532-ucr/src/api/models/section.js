@@ -5,7 +5,6 @@ const SectionSchema = new Schema({
     name: {
         type: String,
         trim: true,
-        index: true,
         unique: true,
         required: true
     },
@@ -19,6 +18,7 @@ const SectionSchema = new Schema({
         }
     ],
 }, {
+    versionKey: false,
     timestamps: true
 });
 

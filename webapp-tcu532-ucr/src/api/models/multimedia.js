@@ -19,6 +19,7 @@ const MultimediaSchema = new Schema({
         type: String
     },
 }, {
+    versionKey: false,
     timestamps: true
 });
 

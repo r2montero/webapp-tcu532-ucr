@@ -29,8 +29,13 @@ exports.create = async (req, res) => {
     section.save((err, section) => {
         if (err) {
             console.log(err);
+            if (err.message.indexOf("11000") != -1) {
+                return res.status(400).json({
+                    msg: `El nombre ${name} ya está asignado a otra sección`
+                });
+            }
             return res.status(500).json({
-                msg: 'No fue posible agregar el usuario'
+                msg: 'No fue posible agregar la sección'
             });
         };
         if (section) {
@@ -43,10 +48,11 @@ exports.create = async (req, res) => {
 //GET All Sections
 exports.getAll = async (req, res) => {
     Section.find()
+        .sort({ name: 'asc' })
         .populate('posts')
         .exec((err, sections) => {
             if (err) {
-                console.log("Se frego esta vara" + err);
+                console.log(err);
             };
             if (sections.length == 0) {
                 res.status(404).json({
@@ -105,7 +111,7 @@ exports.update = async (req, res) => {
     await Section.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, section) => {
         if (!section) {
             return res.status(404).json({
-                msg: "Seccion no encontrada"
+                msg: "Seccion no encontrada con la identificacion proporcionada"
             });
         };
         if (err) {

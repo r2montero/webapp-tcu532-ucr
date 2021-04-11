@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const PostSchema = new Schema({
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-    },
     title: {
         type: String, 
         required: true
@@ -26,7 +22,16 @@ const PostSchema = new Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true
     },
+    tags: [
+        {
+            type: String,
+            trim: true,
+            lowercase: true
+        }
+    ],
+    
     published_date: {
         type: Date,
         required: true
@@ -40,6 +45,7 @@ const PostSchema = new Schema({
         default: true
     },
 }, {
+    versionKey: false,
     timestamps: true
 });
 
