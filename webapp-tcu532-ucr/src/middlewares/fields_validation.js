@@ -10,6 +10,7 @@ const validate = (req = request, res = response, next) => {
             errors: errors.mapped()
         });
     }
+    next();
 }
 
 module.exports = validate;

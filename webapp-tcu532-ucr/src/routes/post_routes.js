@@ -22,10 +22,9 @@ router.post(
     [ //middlewares
         check('title', 'El titulo es requerido').not().isEmpty(),
         check('text', 'El post no tiene contenido').not().isEmpty(),
-        check('published_date', 'La fecha de publicacion es requerida').not().isEmpty(),
         validate
     ],
-    controller.create);
+    controller.create); 
 
 router.put('/:id',
     [ //middlewares
@@ -36,9 +35,21 @@ router.put('/:id',
         validate
     ], controller.update);
 
-//router.put('/addPost/:id', controller.addPost);
+router.put('/addMulti/:id', [ //middlewares
+    check('id', 'Formato de identificacion no valido').isMongoId(),
+    check('name', 'El nombre del archivo multimedias es requerido').not().isEmpty(),
+    check('type', 'El tipo del archivo multimedias es requerido').not().isEmpty(),
+    check('storage_link', 'El enlace al archivo es requerido').not().isEmpty(),
+    validate
+], controller.addMulti);
 
-//router.put('/removePost/:id', controller.removePost);
+router.put('/removeMulti/:id', [ //middlewares
+    check('id', 'Formato de identificacion no valido').isMongoId(),
+    check('name', 'El nombre del archivo multimedias es requerido').not().isEmpty(),
+    check('type', 'El tipo del archivo multimedias es requerido').not().isEmpty(),
+    check('storage_link', 'El enlace al archivo es requerido').not().isEmpty(),
+    validate
+], controller.removeMulti);
 
 router.delete('/:id',
     [ //middlewares

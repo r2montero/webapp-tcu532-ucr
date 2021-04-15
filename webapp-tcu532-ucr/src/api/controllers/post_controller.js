@@ -3,6 +3,7 @@
  */
 const Post = require('../models/post');
 const { response } = require("express");
+const e = require('express');
 require('../models/user');
 require('../models/multimedia');
 
@@ -10,27 +11,20 @@ require('../models/multimedia');
 exports.create = async (req, res = response) => {
     const { title, subtitle, text, multimedia, user, tags, published_date } = req.body;
 
-    if (!multimedia) {
-        multimedia = [];
-    }
-
-    if (!tags) {
-        tags = [];
-    }
-
-    /**
-     * Create a Post
-     */
-    const post = new Post({ title, subtitle, text, multimedia, user, tags, published_date });
-
     try {
+        
+        /**
+         * Create a Post
+         */
+        const post = new Post({ title, subtitle, text, multimedia, user, tags, published_date });
+        
         /**
         * Save post to database
         */
         await post.save();
         return res.status(201).json(post);
     } catch (error) {
-        console.error(error);
+        console.error(error); 
         return res.status(500).json({ msg: 'No se pudo crear el post' });
     }
 }
@@ -116,5 +110,56 @@ exports.delete = async (req, res = response) => {
 }
 
 //Add Multimedia to a Post
+exports.addMulti = async (req, res) => {
+    const { status, msg, post }
+        = await manageMulti(req.params.id, req.body.multimedia._id, 'Push');
+    res.status(status).json({ msg, post });
+}
 
 //Remove Multimedia from Post
+exports.removeMulti = async (req, res) => {
+    const { status, msg, post }
+        = await manageMulti(req.params.id, req.body.multimedia._id, 'Pull');
+    res.status(status).json({ msg, post });
+}
+
+
+//Internal function to manage multimedia in posts
+async function manageMulti(postId, multi, action) {
+    let job;
+    let msg;
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return { status: 404 };
+        }
+
+        if (action == 'Push') {
+            job = 'agregar';
+            section.posts.push(multi);
+            msg = 'agregada';
+        }
+        else {
+            job = 'remover'
+            section.posts.pull(multi);
+            msg = 'eliminada';
+        }
+
+        post.populate('multimedia').populate('user');
+
+        return {
+            status: 200,
+            msg: `Multimedia ${msg} correctamente`,
+            post: post
+        };
+
+    } catch (error) {
+        console.log(error)
+        return {
+            status: 500,
+            msg: `Error al ${job} multimedia del post`,
+            post: null
+        };
+    }
+
+}
