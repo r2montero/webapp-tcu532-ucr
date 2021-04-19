@@ -13,4 +13,14 @@ const validate = (req = request, res = response, next) => {
     next();
 }
 
-module.exports = validate;
+const validId = (req = request, res = response, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+            ok: false,
+            errors: 'Formato de identificacion no valido',
+        });
+    }
+    next();
+}
+
+module.exports = { validate, validId};

@@ -1,58 +1,142 @@
 /**
  * User controller : All business logic goes here
  */
+const { request, response } = require('express');
 const User = require('../models/user');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
+const jwtGen = require('../../helpers/jwt');
 
 //Create new User
-exports.create = async (req, res) => {
+create = async (req = request, res = response) => {
+
   const {
-    name,
     email,
-    phone,
-    password,
-    isActive
+    password
   } = req.body;
 
-  /**
-   * Validation request
-   */
-  if (!email || !password || !name) {
-    return res.status(400).json({
-      msg: 'Uno de los campos obligatorios esta vacio'
-    });
-  };
+  try {
 
-  /**
-   * Create a user
-   */
-  const user = new User({
-    name,
-    email,
-    phone,
-    password: bcrypt.hashSync(password, 10),
-    isActive,
-  });
+    /**
+     * request validation
+     */
+    let user = await User.findOne({ email });
 
-  /**
-   * Save user to database
-   */
-  user.save((err, user) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({
-        msg: 'No fue posible agregar el usuario'
-      });
-    };
     if (user) {
-      return res.status(201).json(user);
+      return res
+        .status(400)
+        .json(
+          {
+            ok: false,
+            msg: `el email ${email} ya existe`
+          });
     };
-  });
+
+    /**
+     * Create a user / register
+     */
+    user = new User(req.body);
+
+    /**
+     * Encrypt password
+     */
+    const salt = bcrypt.genSaltSync();
+    user.password = bcrypt.hashSync(password, salt);
+
+    /**
+     * Save user to database
+     */
+    await user.save();
+
+    /**
+     * jwt generation
+     */
+     const token = await jwtGen(user.id, user.name);
+
+    /**
+     * Send response
+     */
+     res
+     .status(200)
+     .json(
+       {
+         ok: true,
+         user,
+         token,
+     });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ ok: false, msg: 'No se pudo crear el usuario' });
+  }
 }
 
+//User login / authentication
+login = async (req = request, res = response) => {
+  const { email, password } = req.body;
+
+  try {
+    /**
+     * request validation (user must exists)
+     */
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json(
+          {
+            ok: false,
+            msg: `El correo o la contraseña no son válidos`
+          });
+    };
+
+    /**
+     * password match validation
+     */
+    const validPass = bcrypt.compareSync(password, user.password);
+
+    if (!validPass) {
+      return res
+        .status(400)
+        .json(
+          {
+            ok: false,
+            msg: `El correo o la contraseña no son válidos`
+          });
+    }
+
+    /**
+     * jwt generation
+     */
+    const token = await jwtGen(user.id, user.name);
+
+    /**
+     * Send response
+     */
+    res
+    .status(200)
+    .json(
+      {
+        ok: true,
+        uid: user.id,
+        name: user.name,
+        token,
+    });
+
+  } catch (error) {
+    res
+      .status(500)
+      .json(
+        { ok: false, msg: 'Error al autenticar el usuario' }
+      );
+  }
+}
+
+//User token renewal
+tknRenew = async (req = request, res = response) => { }
+
 //GET All Users
-exports.getAll = async (req, res) => {
+getAll = async (req = request, res = response) => {
   const users = await User.find();
   if (users.length == 0) {
     res.status(404).json({
@@ -64,7 +148,7 @@ exports.getAll = async (req, res) => {
 }
 
 //GET One User by id
-exports.getOne = async (req, res) => {
+getOne = async (req = request, res = response) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -82,7 +166,7 @@ exports.getOne = async (req, res) => {
 }
 
 //Update User by id
-exports.update = async (req, res) => {
+update = async (req = request, res = response) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     /**
      * Validation request
@@ -96,7 +180,7 @@ exports.update = async (req, res) => {
     /**
      * Updating user
      */
-    await User.findByIdAndUpdate(req.params.id, req.body, { new:true }, (err, user) => {
+    await User.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, user) => {
       if (!user) {
         return res.status(404).json({
           msg: "Usuario no encontrado"
@@ -118,7 +202,7 @@ exports.update = async (req, res) => {
 }
 
 //Delete User by id
-exports.delete = async (req, res) => {
+remove = async (req = request, res = response) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     await User.findByIdAndRemove(req.params.id, (err, user) => {
       if (!user) {
@@ -139,4 +223,14 @@ exports.delete = async (req, res) => {
       msg: 'Formato de identificacion no valido'
     })
   };
+}
+
+module.exports = {
+  create,
+  login,
+  tknRenew,
+  getAll,
+  getOne,
+  update,
+  remove,
 }

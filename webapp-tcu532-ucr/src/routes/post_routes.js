@@ -4,7 +4,7 @@
 
 const express = require("express");
 const router = express.Router();
-const validate = require('../middlewares/fields_validation')
+const { validate } = require('../middlewares/fields_validation');
 const controller = require('../api/controllers/post_controller');
 const { check } = require("express-validator");
 
@@ -24,7 +24,7 @@ router.post(
         check('text', 'El post no tiene contenido').not().isEmpty(),
         validate
     ],
-    controller.create); 
+    controller.create);
 
 router.put('/:id',
     [ //middlewares
@@ -33,28 +33,35 @@ router.put('/:id',
         check('text', 'El post no tiene contenido').not().isEmpty(),
         check('published_date', 'La fecha de publicacion es requerida').not().isEmpty(),
         validate
-    ], controller.update);
+    ], 
+    controller.update);
 
-router.put('/addMulti/:id', [ //middlewares
-    check('id', 'Formato de identificacion no valido').isMongoId(),
-    check('name', 'El nombre del archivo multimedias es requerido').not().isEmpty(),
-    check('type', 'El tipo del archivo multimedias es requerido').not().isEmpty(),
-    check('storage_link', 'El enlace al archivo es requerido').not().isEmpty(),
-    validate
-], controller.addMulti);
+router.put('/addMulti/:id',
+    [ //middlewares
+        check('id', 'Formato de identificacion no valido').isMongoId(),
+        check('name', 'El nombre del archivo multimedias es requerido').not().isEmpty(),
+        check('type', 'El tipo del archivo multimedias es requerido').not().isEmpty(),
+        check('storage_link', 'El enlace al archivo es requerido').not().isEmpty(),
+        validate
+    ],
+    controller.addMulti);
 
-router.put('/removeMulti/:id', [ //middlewares
-    check('id', 'Formato de identificacion no valido').isMongoId(),
-    check('name', 'El nombre del archivo multimedias es requerido').not().isEmpty(),
-    check('type', 'El tipo del archivo multimedias es requerido').not().isEmpty(),
-    check('storage_link', 'El enlace al archivo es requerido').not().isEmpty(),
-    validate
-], controller.removeMulti);
+router.put('/removeMulti/:id',
+    [ //middlewares
+        check('id', 'Formato de identificacion no valido').isMongoId(),
+        check('name', 'El nombre del archivo multimedias es requerido').not().isEmpty(),
+        check('type', 'El tipo del archivo multimedias es requerido').not().isEmpty(),
+        check('storage_link', 'El enlace al archivo es requerido').not().isEmpty(),
+        validate
+    ],
+    controller.removeMulti);
 
 router.delete('/:id',
     [ //middlewares
         check('id', 'Formato de identificacion no valido').isMongoId(),
         validate
-    ], controller.delete);
+    ],
+    controller.delete);
+
 
 module.exports = router;

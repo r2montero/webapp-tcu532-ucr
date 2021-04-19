@@ -1,26 +1,21 @@
 const express = require('express');
+require('dotenv').config();
 const connectDB = require('../config/db');
 const morgan = require('morgan');
 const path = require('path');
-
 const app = express();
 
-//Codigo temporal, no borrar el codigo comentado
-//const { mongooose } = require('./database');
-//Fin codigo temporal
+//To see Running process
+//console.log(process.env);
 
 // Connect Database
 connectDB();
-
-//Settings
-app.set('port', process.env.PORT || 3000);
 
 //Middlewres
 app.use(morgan('dev'));
 app.use(express.json());
 
 //Routes
-app.use('/api/categories', require('./api/categories'));
 app.use('/api/usuarios', require('./routes/user_routes'));
 app.use('/api/multimedia', require('./routes/multimedia_routes'));
 app.use('/api/secciones', require('./routes/section_routes'));
@@ -30,6 +25,6 @@ app.use('/api/posts', require('./routes/post_routes'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Server
-app.listen(app.get('port'), () => {
-    console.log(`Server on port ${app.get('port')}`)
+app.listen(process.env.PORT, () => {
+    console.log(`Server on port ${process.env.PORT}`)
 });
