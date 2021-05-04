@@ -3,28 +3,31 @@
  */
 const Post = require('../models/post');
 const { response } = require("express");
-const e = require('express');
 require('../models/user');
 require('../models/multimedia');
 
 //Create a new Post
 exports.create = async (req, res = response) => {
-    const { title, subtitle, text, multimedia, user, tags, published_date } = req.body;
-
     try {
-        
+
         /**
          * Create a Post
          */
-        const post = new Post({ title, subtitle, text, multimedia, user, tags, published_date });
-        
+        const post = new Post(req.body);
+
+        /**
+        * Assign the user who created the post
+        */
+        post.user = req.uid;
+
         /**
         * Save post to database
         */
         await post.save();
+
         return res.status(201).json(post);
     } catch (error) {
-        console.error(error); 
+        console.error(error);
         return res.status(500).json({ msg: 'No se pudo crear el post' });
     }
 }

@@ -133,7 +133,25 @@ login = async (req = request, res = response) => {
 }
 
 //User token renewal
-tknRenew = async (req = request, res = response) => { }
+tknRenew = async (req = request, res = response) => { 
+  const { uid, name } = req;
+
+  /**
+     * jwt generation
+     */
+   const token = await jwtGen(uid, name);
+
+   /**
+    * Send response
+    */
+   res
+   .status(200)
+   .json(
+     {
+       ok: true,
+       token,
+   });
+}
 
 //GET All Users
 getAll = async (req = request, res = response) => {

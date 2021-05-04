@@ -6,18 +6,26 @@ const express = require("express");
 const router = express.Router();
 const { check } = require('express-validator');
 const { create, getAll, getOne, login, remove, tknRenew, update } = require('../api/controllers/user_controller');
-const { validate, validId } = require('../middlewares/fields_validation')
+const { validate } = require('../middlewares/fields_validation');
+const { jwtValidate } = require('../middlewares/jwt_validation');
 
 router.get('/', getAll);
-router.get('/:id', getOne);
-router.get('/tknrenew', tknRenew);
+
+router.get('/:id',
+    [ //middlewares
+        check('id', 'Formato de identificacion no valido').isMongoId(),
+        validate
+    ], getOne);
+
+router.get('/tknrenew', jwtValidate, tknRenew);
 
 router.post(
     '/nuevo',
     [ //middlewares
         check('name', 'El nombre es requerido').not().isEmpty(),
         check('email', 'El correo es requerido').not().isEmpty(),
-        check('password', 'El password debe tener al menos 6 caracteres').isLength({ min: 6} ),
+        check('password', 'El password debe tener al menos 6 caracteres').isLength({ min: 6 }),
+        jwtValidate,
         validate,
     ],
     create);
@@ -27,14 +35,15 @@ router.post('/', login);
 router.put(
     '/:id',
     [ //middlewares
+        check('id', 'Formato de identificacion no valido').isMongoId(),
         check('name', 'El nombre es requerido').not().isEmpty(),
         check('email', 'El correo es requerido').not().isEmpty(),
         check('password', 'El password es requerido').not().isEmpty(),
+        jwtValidate,
         validate,
-        validId,
     ],
     update);
 
-router.delete('/:id', remove);
+router.delete('/:id', jwtValidate, remove);
 
 module.exports = router;
