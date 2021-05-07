@@ -101,7 +101,7 @@ login = async (req = request, res = response) => {
         .json(
           {
             ok: false,
-            msg: `El correo o la contraseña no son válidos`
+            msg: `La contraseña o el correo no son válidos`
           });
     }
 
