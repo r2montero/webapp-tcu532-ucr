@@ -51,19 +51,19 @@ create = async (req = request, res = response) => {
     /**
      * jwt generation
      */
-     const token = await jwtGen(user.id, user.name);
+    const token = await jwtGen(user.id, user.name);
 
     /**
      * Send response
      */
-     res
-     .status(200)
-     .json(
-       {
-         ok: true,
-         user,
-         token,
-     });
+    res
+      .status(200)
+      .json(
+        {
+          ok: true,
+          user,
+          token,
+        });
   } catch (error) {
     console.log(error);
     res.status(500).json({ ok: false, msg: 'No se pudo crear el usuario' });
@@ -114,14 +114,14 @@ login = async (req = request, res = response) => {
      * Send response
      */
     res
-    .status(200)
-    .json(
-      {
-        ok: true,
-        uid: user.id,
-        name: user.name,
-        token,
-    });
+      .status(200)
+      .json(
+        {
+          ok: true,
+          uid: user.id,
+          name: user.name,
+          token,
+        });
 
   } catch (error) {
     res
@@ -133,24 +133,26 @@ login = async (req = request, res = response) => {
 }
 
 //User token renewal
-tknRenew = async (req = request, res = response) => { 
+tknRenew = async (req = request, res = response) => {
   const { uid, name } = req;
 
   /**
      * jwt generation
      */
-   const token = await jwtGen(uid, name);
+  const token = await jwtGen(uid, name);
 
-   /**
-    * Send response
-    */
-   res
-   .status(200)
-   .json(
-     {
-       ok: true,
-       token,
-   });
+  /**
+   * Send response
+   */
+  res
+    .status(200)
+    .json(
+      {
+        ok: true,
+        uid,
+        name,
+        token,
+      });
 }
 
 //GET All Users
