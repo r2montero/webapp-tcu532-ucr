@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d284ae47.chunk.css",
+    "main.js": "/static/js/main.8401860b.chunk.js",
+    "main.js.map": "/static/js/main.8401860b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.dc62fc41.js",
+    "runtime-main.js.map": "/static/js/runtime-main.dc62fc41.js.map",
+    "static/css/2.ef9168ec.chunk.css": "/static/css/2.ef9168ec.chunk.css",
+    "static/js/2.830da8f9.chunk.js": "/static/js/2.830da8f9.chunk.js",
+    "static/js/2.830da8f9.chunk.js.map": "/static/js/2.830da8f9.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.ef9168ec.chunk.css.map": "/static/css/2.ef9168ec.chunk.css.map",
+    "static/css/main.d284ae47.chunk.css.map": "/static/css/main.d284ae47.chunk.css.map",
+    "static/js/2.830da8f9.chunk.js.LICENSE.txt": "/static/js/2.830da8f9.chunk.js.LICENSE.txt",
+    "static/media/loginScreen.css": "/static/media/cosecha.0c8381cb.png",
+    "static/media/audio.7b16cb2c.png": "/static/media/audio.7b16cb2c.png",
+    "static/media/publicHome.css": "/static/media/economía-solidaria.5f376418.jpg",
+    "static/media/docs.f463b7a5.png": "/static/media/docs.f463b7a5.png",
+    "static/media/mujeres-1.ccf288ae.jpg": "/static/media/mujeres-1.ccf288ae.jpg",
+    "static/media/mujeres.1bea4699.jpg": "/static/media/mujeres.1bea4699.jpg",
+    "static/media/otro.1b74dc9c.png": "/static/media/otro.1b74dc9c.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dc62fc41.js",
+    "static/css/2.ef9168ec.chunk.css",
+    "static/js/2.830da8f9.chunk.js",
+    "static/css/main.d284ae47.chunk.css",
+    "static/js/main.8401860b.chunk.js"
+  ]
+}

@@ -22,6 +22,7 @@ router.get('/:id',
 router.post('/',
     [ //middlewares
         check('name', 'El nombre es requerido').not().isEmpty(),
+        jwtValidate,
         validate
     ],
     controller.create);
@@ -35,21 +36,21 @@ router.put('/:id',
     ],
     controller.update);
 
-router.put('/addPost/:id',
-    [ //middlewares
-        check('id', 'Formato de identificacion no valido').isMongoId(),
-        jwtValidate,
-        validate
-    ],
-    controller.addPost);
+// router.put('/addPost/:id',
+//     [ //middlewares
+//         check('id', 'Formato de identificacion no valido').isMongoId(),
+//         jwtValidate,
+//         validate
+//     ],
+//     controller.addPost);
 
-router.put('/removePost/:id',
-    [ //middlewares
-        check('id', 'Formato de identificacion no valido').isMongoId(),
-        jwtValidate,
-        validate
-    ],
-    controller.removePost);
+// router.put('/removePost/:id',
+//     [ //middlewares
+//         check('id', 'Formato de identificacion no valido').isMongoId(),
+//         jwtValidate,
+//         validate
+//     ],
+//     controller.removePost);
 
 router.delete('/:id', [ //middlewares
     check('id', 'Formato de identificacion no valido').isMongoId(),

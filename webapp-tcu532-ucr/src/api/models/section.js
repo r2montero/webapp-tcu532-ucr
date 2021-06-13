@@ -11,12 +11,11 @@ const SectionSchema = new Schema({
     description: {
         type: String,
     },
-    posts: [
-        {
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Post'
-        }
-    ],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
 }, {
     versionKey: false,
     timestamps: true

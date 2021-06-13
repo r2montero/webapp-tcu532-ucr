@@ -3,20 +3,29 @@ const { Schema } = mongoose;
 
 const MultimediaSchema = new Schema({
     name: {
-        type: String, 
+        type: String,
         required: true
     },
     type: {
         type: String,
-        enum: ["Audio", "Documento", "Imagen", "Infografía", "Vídeo", "Otro"],
+        enum: ["Audio", "Documento", "Imágen", "Infografía", "Vídeo", "Otro"],
         required: true
     },
     storage_link: {
-        type: String, 
+        type: String,
         required: true
     },
     description: {
         type: String
+    },
+    section: {
+        type: String,
+        required: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
 }, {
     versionKey: false,

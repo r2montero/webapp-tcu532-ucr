@@ -3,7 +3,7 @@ require('dotenv').config();
 const connectDB = require('../config/db');
 const morgan = require('morgan');
 const path = require('path');
-const cors = require('cors')
+const cors = require('cors');
 
 //Express server
 const app = express();
@@ -25,10 +25,16 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
+app.use('/api/auth', require('./routes/auth_routes'));
 app.use('/api/usuarios', require('./routes/user_routes'));
 app.use('/api/multimedia', require('./routes/multimedia_routes'));
 app.use('/api/secciones', require('./routes/section_routes'));
 app.use('/api/posts', require('./routes/post_routes'));
+
+/** Para cualquier otra petición */
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
 
 //Server
 app.listen(process.env.PORT, () => {

@@ -138,6 +138,6 @@ sketch
 
 ### Secrets ###
 Accounts.txt
-**/config/default.json
+##**/config/default.json
 
 # End of https://www.toptal.com/developers/gitignore/api/react,node,vscode

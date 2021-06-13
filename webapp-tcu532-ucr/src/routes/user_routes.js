@@ -5,7 +5,7 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require('express-validator');
-const { create, getAll, getOne, login, remove, tknRenew, update } = require('../api/controllers/user_controller');
+const { create, getAll, getOne, remove, update } = require('../api/controllers/user_controller');
 const { validate } = require('../middlewares/fields_validation');
 const { jwtValidate } = require('../middlewares/jwt_validation');
 
@@ -17,8 +17,6 @@ router.get('/:id',
         validate
     ], getOne);
 
-router.get('/tknrenew', jwtValidate, tknRenew);
-
 router.post(
     '/nuevo',
     [ //middlewares
@@ -29,8 +27,6 @@ router.post(
         validate,
     ],
     create);
-
-router.post('/', login);
 
 router.put(
     '/:id',
